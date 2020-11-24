@@ -503,7 +503,7 @@ class Client(object):
             raise RemoteParentNotFound(urn.path())
 
         with open(local_path, "rb") as local_file:
-            self.execute_request(action='upload', path=urn.quote(), data=local_file)
+            self.execute_request(action='upload', path=urn.path(), data=local_file)
 
     def upload_sync(self, remote_path, local_path, callback=None):
         """Uploads resource to remote path on WebDAV server synchronously.
@@ -570,9 +570,9 @@ class Client(object):
         if not self.check(urn_to.parent()):
             raise RemoteParentNotFound(urn_to.path())
 
-        header_destination = "Destination: {path}".format(path=self.get_url(urn_to.quote()))
+        header_destination = "Destination: {path}".format(path=self.get_url(urn_to.path()))
         header_overwrite = "Overwrite: {flag}".format(flag="T" if overwrite else "F")
-        self.execute_request(action='move', path=urn_from.quote(), headers_ext=[header_destination, header_overwrite])
+        self.execute_request(action='move', path=urn_from.path(), headers_ext=[header_destination, header_overwrite])
 
     @wrap_connection_error
     def clean(self, remote_path):
